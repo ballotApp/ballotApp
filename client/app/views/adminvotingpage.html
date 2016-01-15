@@ -20,7 +20,7 @@
 <div>
     <ul>
         <li ng-repeat="choice in choices">
-          <button id="{{choice.choice}}" ng-click="select(choice.id)" class="btn btn-default">
+          <button id="{{choice.choice}}" ng-click="select(choice.id)" ng-class="{active: $index===selectedIndex}">
             {{choice.choice}}
         </li>
     </ul>

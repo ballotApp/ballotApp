@@ -250,7 +250,7 @@ router.route('/ballots/:ballotCode')
   });
 })
 .post(function(req, res) {
-  var user_id, ballot_id, userVoteCount, username, ballot_option_name;
+  var user_id, ballot_id, userVoteCount, username;
   //fetch ballot info by code
   Ballot.forge({ballot_code: req.params.ballotCode})
   .fetch()
@@ -260,9 +260,8 @@ router.route('/ballots/:ballotCode')
     }
     else {
       let ballotInfo = ballot.toJSON();
-      //get ballot_id and name
+      //get ballot_id
       ballot_id = ballotInfo.id;
-      ballot_option_name = ballotInfo.ballot_option_name;
 
     }
   })
@@ -302,12 +301,10 @@ router.route('/ballots/:ballotCode')
   });
 });
 
-//
-//new voter by route
 router.route('/ballots/:ballotCode/:username')
 //     POST           // Ballots/ballotCode/username          //fetch ballot info based on ballotCode and insert user
 .post(function(req, res) {
-  var user_id, ballot_id, userVoteCount, username, ballot_option_id;
+  var user_id, ballot_id, userVoteCount, username;
   //fetch ballot info by code
   console.log('+++req.params = > ', req.params);
   Ballot.forge({ballot_code: req.params.ballotCode})
@@ -320,7 +317,6 @@ router.route('/ballots/:ballotCode/:username')
       let ballotInfo = ballot.toJSON();
       //get ballot_id
       ballot_id = ballotInfo.id;
-      ballot_option_id = ballotInfo.ballot_option_id;
 
     }
   })
@@ -356,29 +352,6 @@ router.route('/ballots/:ballotCode/:username')
     }, ballot_id);
   })
   .catch(function(err) {
-    res.status(500).json({error: true, data: {message: err.message}});
-  });
-});
-
-router.route('/voter/vote')
-//POST           // Ballots/vote/          //fetch ballot info based on ballotCode and insert user
-.post(function (req, res) {
-  console.log('+++ inside app.js /ballots/vote route');
-  UserVote.forge({id: req.body.ballotId})
-  .fetch({require: true})
-  .then(function (userVote) {
-    userVote.save({
-      up_down: 1,
-      ballot_option_name: req.body.userVoterChoice
-    }, {patch: true})
-    .then(function () {
-      res.json({error: false, data: {message: 'User vote recorded'}});
-    })
-    .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
-    });
-  })
-  .catch(function (err) {
     res.status(500).json({error: true, data: {message: err.message}});
   });
 });

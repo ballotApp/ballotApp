@@ -8,30 +8,16 @@
  * Controller of the ballotTempApp
  */
 angular.module('angularBestPracticeApp')
-  .controller('BallotInitiationCtrl', ['$scope', '$rootScope', 'UserFactory', '$http', function($scope, $rootScope, UserFactory, $http){
+  .controller('BallotInitiationCtrl', ['$scope', '$rootScope', 'UserFactory', function($scope, $rootScope, UserFactory){
     $rootScope.randomCode = (new Date()).getTime().toString().slice(8);
     $scope.enterBallotCode = function(){
       $rootScope.userGivenCode = $scope.userGivenCode;
-      // console.log("this is $rootScope.userGivenCode", $rootScope.userGivenCode);
-      // console.log("this is the userGivenUserName", $scope.userGivenUserName);
-      $http({
-          method  : 'POST',
-          url     : '/api/ballots/'+$scope.userGivenCode+'/'+$scope.userGivenUserName,
-          data    : {
-            "name": $scope.userGivenUserName,
-            "ballotCode": $scope.userGivenCode
-          }
-        }).then(function(success){
-          console.log('this is the success ID on entering a roomcode', success.data.data.id);
-          $rootScope.ballotId = success.data.data.id;
-          console.log('this is $rootScope.ballotId!!!', $rootScope.ballotId);
-        }, function(err){
-          console.log('THIS IS AN ERROR!');
-        });
+      console.log("this is $rootScope.userGivenCode", $rootScope.userGivenCode);
+      console.log("this is the userGivenUserName", $scope.userGivenUserName);
     };
 
     $scope.saveUser = function(user){
-      // console.log('inside of saveUser, the user is:', user);
+      console.log('inside of saveUser, the user is:', user);
       UserFactory.setUser(user);
     }
   }])

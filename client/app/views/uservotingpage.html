@@ -12,17 +12,11 @@
 <div>
     <ul>
         <li ng-repeat="choice in choices">
-          <button id="{{choice.choice}}" ng-click="select(choice.id)" class="btn btn-default">
+          <button id="{{choice.choice}}" ng-click="select(choice.id); myStyle={'background-color':'yellow'}" ng-style="myStyle">
             {{choice.choice}}
         </button>
       </li>
     </ul>
-</div>
-
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-    <button type="submit" ng-click="endVoting()" class="btn btn-success">Done Voting</button>
-  </div>
 </div>
 
 
